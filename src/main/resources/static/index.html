@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insurance Application</title>
+    <link rel="stylesheet" href="style/styles.css">
+    <script defer src="js/app.js"></script>
+</head>
+<body>
+<div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'Sale')">Sprzedaż</button>
+    <button class="tablinks" onclick="openTab(event, 'Service')">Obsługa</button>
+</div>
+
+<div id="Sale" class="tabcontent">
+    <button onclick="openSubTab('Communication')">Komunikacja</button>
+    <button onclick="openSubTab('Asset')">Majątek</button>
+
+    <div id="Communication" class="subtabcontent">
+        <!-- Content for Communication tab -->
+    </div>
+
+    <div id="Asset" class="subtabcontent">
+        <h3>Wprowadź dane klienta</h3>
+        <form id="asset-form">
+            <label for="firstName">Imię:</label>
+            <input type="text" id="firstName" name="firstName"><br>
+
+            <label for="lastName">Nazwisko:</label>
+            <input type="text" id="lastName" name="lastName"><br>
+
+            <label for="address">Adres:</label>
+            <input type="text" id="address" name="address"><br>
+
+            <label for="phoneNumber">Numer telefonu:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber"><br>
+
+            <label for="yearBuilt">Rok budowy nieruchomości:</label>
+            <input type="number" id="yearBuilt" name="yearBuilt"><br>
+
+            <label for="buildingValue">Wartość budynku:</label>
+            <input type="number" id="buildingValue" name="buildingValue"><br>
+
+            <label for="contentValue">Wartość rzeczy w środku:</label>
+            <input type="number" id="contentValue" name="contentValue"><br>
+
+            <button type="submit">Wyślij</button>
+        </form>
+        <div id="calculationResult"></div>
+    </div>
+</div>
+
+<div id="Service" class="tabcontent">
+    <!-- Content for Service tab -->
+</div>
+</body>
+</html>
