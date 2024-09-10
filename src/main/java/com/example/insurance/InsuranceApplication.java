@@ -2,7 +2,7 @@ package com.example.insurance;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-// uruchomienia aplikacji
+// Uruchomienia aplikacji - tutaj
 @SpringBootApplication
 public class InsuranceApplication {
 
