@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', credentialsId: 'GitHub-API-Token', url: 'https://github.com/gitlearncpp/Insurance.git'
+                git branch: 'master', credentialsId: 'fe79b993-b4a1-4cf7-b11b-455f789e33b2', url: 'https://github.com/gitlearncpp/Insurance.git'
             }
         }
 
