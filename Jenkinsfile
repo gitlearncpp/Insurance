@@ -28,26 +28,27 @@ pipeline {
             }
         }
 
-        stage('Deploy to VPS') {
-            steps {
-                // Skopiowanie pliku JAR na serwer VPS
-                sh '''
-                    scp -i /path/to/private/key \
-                    target/insurance.jar user@57.129.16.48:/path/to/deployment/directory/
-                '''
-            }
-        }
-
-        stage('Run on VPS') {
-            steps {
-                // Uruchomienie aplikacji na serwerze VPS
-                sh '''
-                    ssh -i /path/to/private/key user@57.129.16.48 \
-                    'nohup java -jar /path/to/deployment/directory/insurance.jar > /dev/null 2>&1 &'
-                '''
-            }
+      stage('Deploy to VPS') {
+    steps {
+        sshagent(['VPS-SSH-Credentials']) {
+            sh '''
+                scp target/insurance.jar fedora@57.129.16.48:/opt/insurance
+            '''
         }
     }
+}
+
+
+        stage('Run on VPS') {
+    steps {
+        sshagent(['VPS-SSH-Credentials']) {
+            sh '''
+                ssh fedora@57.129.16.48 'nohup java -jar /opt/insurance/insurance.jar > /dev/null 2>&1 &'
+            '''
+        }
+    }
+}
+
 
     post {
         success {
