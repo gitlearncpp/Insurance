@@ -10,14 +10,12 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Budowanie aplikacji za pomocą Mavena
                 sh 'mvn clean install'
             }
         }
 
         stage('Package') {
             steps {
-                // Pakowanie aplikacji
                 sh 'mvn package'
             }
         }
@@ -28,27 +26,36 @@ pipeline {
             }
         }
 
-      stage('Deploy to VPS') {
-    steps {
-        sshagent(['VPS-SSH-Credentials']) {
-            sh '''
-                scp target/insurance.jar fedora@57.129.16.48:/opt/insurance
-            '''
+        stage('Stop Old Version') {
+            steps {
+                sshagent(['VPS-SSH-Credentials']) {
+                    sh '''
+                        ssh fedora@57.129.16.48 'pkill -f "insurance.jar"'
+                    '''
+                }
+            }
         }
-    }
-}
 
+        stage('Deploy to VPS') {
+            steps {
+                sshagent(['VPS-SSH-Credentials']) {
+                    sh '''
+                        scp -v target/insurance.jar fedora@57.129.16.48:/opt/insurance
+                    '''
+                }
+            }
+        }
 
         stage('Run on VPS') {
-    steps {
-        sshagent(['VPS-SSH-Credentials']) {
-            sh '''
-                ssh fedora@57.129.16.48 'nohup java -jar /opt/insurance/insurance.jar > /dev/null 2>&1 &'
-            '''
+            steps {
+                sshagent(['VPS-SSH-Credentials']) {
+                    sh '''
+                        ssh fedora@57.129.16.48 'nohup java -jar /opt/insurance/insurance.jar > /dev/null 2>&1 &'
+                    '''
+                }
+            }
         }
     }
-}
-
 
     post {
         success {
